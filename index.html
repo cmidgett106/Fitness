@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Run Log — 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0D0F14;--surface:#161922;--surface2:#1E2330;--border:#2A3040;
+    --text:#F0F0F0;--muted:#7A8299;--fire:#FF6B35;--mint:#00C896;
+    --blue:#4A9EFF;--gold:#F5C842;--purple:#B07EFF;
+  }
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+  header{padding:48px 32px 32px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+  header::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,107,53,.12) 0%,transparent 70%);pointer-events:none}
+  .header-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--fire);margin-bottom:8px}
+  h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,8vw,88px);font-weight:900;line-height:.9;letter-spacing:-.02em;color:var(--text);margin-bottom:20px}
+  h1 span{color:var(--fire)}
+  .stats-section{margin-top:24px}
+  .stats-row-label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .stats-row-label span{color:var(--fire)}
+  .header-stats{display:flex;flex-wrap:wrap;gap:24px;margin-bottom:20px}
+  .hstat{display:flex;flex-direction:column;gap:2px}
+  .hstat-val{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--text)}
+  .hstat-val.fire{color:var(--fire)}.hstat-val.mint{color:var(--mint)}.hstat-val.blue{color:var(--blue)}.hstat-val.gold{color:var(--gold)}
+  .hstat-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  .divider-line{border:none;border-top:1px solid var(--border);margin:16px 0}
+  .legend{display:flex;flex-wrap:wrap;gap:20px;padding:16px 32px;border-bottom:1px solid var(--border);background:var(--surface)}
+  .legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:500}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  /* TREND CHARTS */
+  .trend-section{padding:32px 32px 24px;border-bottom:1px solid var(--border)}
+  .section-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+  .section-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px 10px}
+  .chart-card-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+  .chart-card-sub{font-size:10px;color:var(--muted);margin-bottom:10px}
+  .chart-card canvas{width:100%!important;display:block}
+  /* FEEDBACK */
+  .feedback-section{padding:32px;border-bottom:1px solid var(--border)}
+  .feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .feedback-grid.three{grid-template-columns:1fr 1fr 1fr}
+  .fb-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .fb-card.accent-fire{border-top:3px solid var(--fire)}
+  .fb-card.accent-mint{border-top:3px solid var(--mint)}
+  .fb-card.accent-blue{border-top:3px solid var(--blue)}
+  .fb-card.accent-gold{border-top:3px solid var(--gold)}
+  .fb-card.accent-purple{border-top:3px solid var(--purple)}
+  .fb-eyebrow{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .fb-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;margin-bottom:10px}
+  .fb-body{font-size:13px;color:#C0C8D8;line-height:1.65}
+  .fb-body strong{color:var(--text)}
+  .fb-stat-row{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+  .fb-stat{display:flex;flex-direction:column;gap:2px}
+  .fb-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700}
+  .fb-stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  .fb-list{margin-top:8px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+  .fb-list li{font-size:13px;color:#C0C8D8;padding-left:16px;position:relative;line-height:1.5}
+  .fb-list li::before{content:'→';position:absolute;left:0;color:var(--fire);font-size:12px}
+  .fb-list.mint li::before{color:var(--mint)}
+  .fb-list.blue li::before{color:var(--blue)}
+  .fb-list.purple li::before{color:var(--purple)}
+  .fb-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;margin-right:4px;margin-bottom:4px}
+  .fb-tag.fire{background:rgba(255,107,53,.18);color:var(--fire)}
+  .fb-tag.mint{background:rgba(0,200,150,.15);color:var(--mint)}
+  .fb-tag.blue{background:rgba(74,158,255,.18);color:var(--blue)}
+  .fb-tag.gold{background:rgba(245,200,66,.18);color:var(--gold)}
+  .fb-tag.purple{background:rgba(176,126,255,.18);color:var(--purple)}
+  .rank-bar-wrap{margin-top:12px}
+  .rank-bar-row{margin-bottom:10px}
+  .rank-bar-label{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;justify-content:space-between;align-items:center}
+  .rank-bar-bg{background:var(--surface2);border-radius:4px;height:10px;overflow:visible;position:relative}
+  .rank-bar-fill{height:100%;border-radius:4px;position:relative}
+  .rank-bar-top10{position:absolute;top:-4px;bottom:-4px;width:2px;background:rgba(245,200,66,.9);border-radius:1px}
+  .rank-bar-top10-label{position:absolute;top:-18px;font-size:9px;color:var(--gold);font-weight:600;white-space:nowrap;transform:translateX(-50%)}
+  .epoc-box{margin-top:10px;background:rgba(176,126,255,.08);border:1px solid rgba(176,126,255,.25);border-radius:6px;padding:10px 12px}
+  .epoc-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:4px}
+  .epoc-body{font-size:12px;color:#C0C8D8;line-height:1.6}
+  /* MAIN LOG */
+  main{padding:0 0 80px}
+  .month{border-bottom:1px solid var(--border)}
+  .month-header{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;cursor:pointer;user-select:none;background:var(--surface);transition:background .2s}
+  .month-header:hover{background:var(--surface2)}
+  .month-title{display:flex;align-items:baseline;gap:16px}
+  .month-name{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+  .month-summary{font-size:12px;color:var(--muted);font-weight:500}
+  .month-chevron{font-size:18px;color:var(--muted);transition:transform .25s}
+  .month.open .month-chevron{transform:rotate(180deg)}
+  .month-body{display:none}
+  .month.open .month-body{display:block}
+  .week{border-top:1px solid var(--border)}
+  .week-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:12px 32px 8px}
+  .workout{display:grid;grid-template-columns:36px 1fr auto;align-items:start;gap:12px;padding:14px 32px;border-top:1px solid var(--border);transition:background .15s}
+  .workout:hover{background:rgba(255,107,53,.04)}
+  .workout-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px}
+  .workout-icon.out{background:rgba(74,158,255,.15)}
+  .workout-icon.in{background:rgba(176,126,255,.15)}
+  .workout-icon.walk{background:rgba(0,200,150,.12)}
+  .workout-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.01em;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+  .badge.out{background:rgba(74,158,255,.18);color:var(--blue)}
+  .badge.in{background:rgba(176,126,255,.18);color:var(--purple)}
+  .badge.intervals{background:rgba(245,200,66,.18);color:var(--gold)}
+  .badge.walk{background:rgba(0,200,150,.15);color:var(--mint)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .chip{display:flex;flex-direction:column;gap:1px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;min-width:60px}
+  .chip-val{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;line-height:1}
+  .chip-val.fire{color:var(--fire)}.chip-val.mint{color:var(--mint)}.chip-val.blue{color:var(--blue)}.chip-val.gold{color:var(--gold)}.chip-val.purple{color:var(--purple)}
+  .chip-lbl{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .burn-bar-wrap{margin-top:4px}
+  .burn-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-weight:500;margin-bottom:4px}
+  .burn-bar-labels span:first-child{color:var(--fire)}
+  .burn-bar-labels span:last-child{color:var(--mint)}
+  .burn-bar{height:8px;border-radius:4px;overflow:hidden;background:var(--border);display:flex;max-width:340px}
+  .burn-bar-fat{background:linear-gradient(90deg,#FF6B35,#FF8C5A);height:100%;border-radius:4px 0 0 4px}
+  .burn-bar-carb{background:linear-gradient(90deg,#00C896,#00E0AC);height:100%;border-radius:0 4px 4px 0}
+  .health-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .hchip{font-size:10px;font-weight:500;color:var(--muted);background:var(--surface2);border-radius:4px;padding:3px 8px;border:1px solid var(--border)}
+  .hchip strong{color:var(--text)}
+  .hchip.epoc{border-color:rgba(176,126,255,.4);background:rgba(176,126,255,.08)}
+  .hchip.epoc strong{color:var(--purple)}
+  .cal-col{text-align:right;flex-shrink:0;margin-top:2px}
+  .cal-num{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:var(--fire);line-height:1}
+  .cal-unit{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .footer-note{padding:24px 32px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);line-height:1.7}
+  .footer-note strong{color:var(--text)}
+  @media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
+  @media(max-width:700px){
+    .feedback-grid,.feedback-grid.three{grid-template-columns:1fr}
+    header,.month-header,.week-label,.workout,.legend,.footer-note,.feedback-section,.trend-section{padding-left:16px;padding-right:16px}
+    h1{font-size:48px}.workout{grid-template-columns:30px 1fr}.cal-col{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">2025 Training Log</div>
+  <h1>RUN<br><span>LOG</span></h1>
+  <div class="stats-section">
+    <div class="stats-row-label"><span>▸</span> Year to Date</div>
+    <div class="header-stats" id="globalStats"></div>
+    <hr class="divider-line">
+    <div class="stats-row-label"><span>▸</span> Weekly Averages</div>
+    <div class="header-stats" id="weeklyAvgStats"></div>
+  </div>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--fire)"></div>Fat Burned (g)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--mint)"></div>Carbs Burned (g)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Outside Run</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Treadmill</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Intervals</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple);opacity:.5"></div>EPOC afterburn included in kcal totals</div>
+</div>
+
+<!-- TREND CHARTS -->
+<div class="trend-section">
+  <div class="section-title">Performance Trend</div>
+  <div class="section-sub">Three independent views across Jan–Jun 2025 &nbsp;·&nbsp; <span style="color:var(--purple)">VO₂ estimated via Daniels VDOT — for clinical precision use a lab treadmill test, Garmin Running Dynamics, or Apple Watch VO₂ max feature</span></div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-card-title" style="color:var(--fire)">Weekly Calories</div>
+      <div class="chart-card-sub">Total kcal incl. EPOC afterburn · left axis</div>
+      <canvas id="chartKcal" height="140"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title" style="color:var(--gold)">Workout Count</div>
+      <div class="chart-card-sub">Sessions per week · bar chart</div>
+      <canvas id="chartCount" height="140"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title" style="color:var(--purple)">VO₂ Max Estimate</div>
+      <div class="chart-card-sub">Monthly avg from timed runs · VDOT method</div>
+      <canvas id="chartVO2" height="140"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK -->
+<div class="feedback-section">
+  <div class="section-title" style="margin-bottom:4px">Coaching Insights</div>
+  <div class="section-sub">Performance by run type · consistency · training recommendations</div>
+
+  <!-- Row 1: Progress by run type + Age group rank -->
+  <div class="feedback-grid" style="margin-bottom:16px">
+    <div class="fb-card accent-fire">
+      <div class="fb-eyebrow">Section 1 — Your Progress by Run Type</div>
+      <div class="fb-title">Three Disciplines, Three Stories</div>
+
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">⚡ Intervals</div>
+        <div class="fb-body">Started Feb at <strong>6:00/mi quarters</strong>. By March you were hitting <strong>4:00/mi</strong> — a 33% pace jump in 4 weeks. That's elite-level progression for a recreational runner. May settled back to 6:00, likely intentional volume work. Your best interval pace puts you in the <strong>top 15%</strong> of M35 runners.</div>
+        <div class="fb-stat-row" style="margin-top:6px">
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--gold)">6:00</span><span class="fb-stat-lbl">Feb start</span></div>
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--fire)">4:00</span><span class="fb-stat-lbl">Mar peak</span></div>
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--mint)">14 runs</span><span class="fb-stat-lbl">total intervals</span></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;padding-top:12px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px">⚡ Fast Runs (sub-8:00/mi)</div>
+        <div class="fb-body">First fast run: <strong>7:49</strong> in Jan. By April you were running <strong>6:44–6:56</strong> on 4–5 mile efforts — nearly a 70-second pace improvement over 4 months. These runs do the most for VO₂ adaptation and calorie density per mile.</div>
+        <div class="fb-stat-row" style="margin-top:6px">
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--gold)">7:49</span><span class="fb-stat-lbl">Jan best</span></div>
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--fire)">6:44</span><span class="fb-stat-lbl">Apr best</span></div>
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--mint)">~68s</span><span class="fb-stat-lbl">improvement</span></div>
+        </div>
+      </div>
+
+      <div style="padding-top:12px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);margin-bottom:4px">🏃 Long Runs (6+ miles)</div>
+        <div class="fb-body">Peaked at <strong>8 miles in March</strong> (71:30 — 8:56/mi). April had two consecutive <strong>7-mile outdoor runs</strong> showing real endurance consistency. Long runs are your highest fat-burning sessions and the backbone of metabolic conditioning. You have the base to push toward <strong>10 miles</strong> by late summer.</div>
+        <div class="fb-stat-row" style="margin-top:6px">
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--gold)">3 mi</span><span class="fb-stat-lbl">Jan start</span></div>
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--fire)">8 mi</span><span class="fb-stat-lbl">Mar peak</span></div>
+          <div class="fb-stat"><span class="fb-stat-val" style="color:var(--mint)">+167%</span><span class="fb-stat-lbl">distance growth</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fb-card accent-blue">
+      <div class="fb-eyebrow">Section 1 — Age Group Ranking (M35)</div>
+      <div class="fb-title">Where You Stand vs Peers</div>
+      <div class="fb-body">Benchmarks for a 35-year-old male recreational runner. <span style="color:var(--gold)">Gold line = top 10% threshold.</span></div>
+      <div class="rank-bar-wrap">
+
+        <div class="rank-bar-row">
+          <div class="rank-bar-label">
+            <span>Training pace avg ~7:30/mi → <strong style="color:var(--blue)">Top 22%</strong></span>
+            <span style="font-size:10px;color:var(--muted)">Top 10%: &lt;6:45/mi</span>
+          </div>
+          <div class="rank-bar-bg">
+            <div class="rank-bar-fill" style="width:78%;background:var(--blue);position:relative">
+              <div class="rank-bar-top10" style="left:calc(100% * 10/78)">
+                <div class="rank-bar-top10-label" style="left:50%">Top 10%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rank-bar-row">
+          <div class="rank-bar-label">
+            <span>Long run ≥7 mi → <strong style="color:var(--mint)">Top 28%</strong></span>
+            <span style="font-size:10px;color:var(--muted)">Top 10%: 10+ mi long run</span>
+          </div>
+          <div class="rank-bar-bg">
+            <div class="rank-bar-fill" style="width:72%;background:var(--mint);position:relative">
+              <div class="rank-bar-top10" style="left:calc(100% * 10/72)">
+                <div class="rank-bar-top10-label" style="left:50%">Top 10%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rank-bar-row">
+          <div class="rank-bar-label">
+            <span>VO₂ max est. ~52–56 → <strong style="color:var(--gold)">Top 20%</strong></span>
+            <span style="font-size:10px;color:var(--gold)">🎯 Target: 58–60 (top 10%)</span>
+          </div>
+          <div class="rank-bar-bg">
+            <div class="rank-bar-fill" style="width:80%;background:var(--gold);position:relative">
+              <div class="rank-bar-top10" style="left:calc(100% * 10/80)">
+                <div class="rank-bar-top10-label" style="left:50%">Top 10%</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#C0C8D8;margin-top:4px">Avg M35 = 44–48 · Good = 52–56 · Excellent = 57–62 · Top 10% = 58+ · Your current est. <strong style="color:var(--gold)">~54</strong> → need +4 pts to crack top 10%. Achievable in 3–4 months with consistent tempo work.</div>
+        </div>
+
+        <div class="rank-bar-row">
+          <div class="rank-bar-label">
+            <span>Weekly frequency 1–2x → <strong style="color:var(--fire)">Below Average</strong></span>
+            <span style="font-size:10px;color:var(--muted)">Top 10%: 4–5x/week</span>
+          </div>
+          <div class="rank-bar-bg">
+            <div class="rank-bar-fill" style="width:35%;background:var(--fire);position:relative">
+              <div class="rank-bar-top10" style="left:calc(100% * 10/35)">
+                <div class="rank-bar-top10-label" style="left:50%">Top 10%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="fb-body" style="margin-top:10px">Your pace and aerobic capacity are <strong>genuinely strong for M35</strong>. The path to top 10% is clear: frequency up to 4x/week, add weekly tempo runs, and push long runs past 10 miles. VO₂ target: <strong style="color:var(--gold)">58–60 mL/kg/min</strong>.</div>
+    </div>
+  </div>
+
+  <!-- Row 2: Consistency + Abs -->
+  <div class="feedback-grid" style="margin-bottom:16px">
+    <div class="fb-card accent-gold">
+      <div class="fb-eyebrow">Section 2 — Consistency & Effort</div>
+      <div class="fb-title">The Volume Gap Is Costing You</div>
+      <div class="fb-body">You have weeks with 3 quality sessions (March Wk3 is your benchmark: 8mi + 5mi + intervals) and weeks with just 1 or a complete blank. This variance is the single biggest limiter to your goals.</div>
+      <ul class="fb-list">
+        <li><strong>Strong weeks</strong> (Mar Wk3, Apr Wk1, May Wk4) prove your body can handle 3-session volume. That's the floor, not the ceiling.</li>
+        <li>Blank or 1-session weeks break metabolic momentum. Even a 2-mile easy run or 30-min incline walk maintains the signal.</li>
+        <li>For abs: you need the caloric deficit <strong>consistent week-over-week</strong>, not spiked then absent.</li>
+        <li>Target floor: <strong>3 sessions/week, no week under 12 miles total</strong>. At current avg pace, 12 miles = ~1,400–1,600 kcal/week from running alone.</li>
+      </ul>
+      <div class="epoc-box" style="margin-top:12px">
+        <div class="epoc-title">🔥 EPOC: The Hidden Calorie Burn</div>
+        <div class="epoc-body"><strong style="color:var(--purple)">EPOC (Excess Post-Exercise Oxygen Consumption)</strong> is the elevated calorie burn that continues after your workout ends — your body repaying its "oxygen debt" by burning extra fuel to restore muscle glycogen, clear lactate, and return to homeostasis.<br><br>
+        Your <strong>intervals</strong> generate the highest EPOC — up to <strong>+15% of session kcal</strong> for 24–48 hrs post-run. Fast runs under 7:30/mi add <strong>+8–10%</strong>. Easy runs add ~3–5%. All EPOC estimates are already included in each workout's calorie total on this page. The practical takeaway: <strong>a 500-kcal interval session can deliver 570–575 effective kcal</strong> toward your daily deficit.</div>
+      </div>
+    </div>
+    <div class="fb-card accent-mint">
+      <div class="fb-eyebrow">Section 2 — Abs & Body Composition</div>
+      <div class="fb-title">The Roadmap to Definition</div>
+      <div class="fb-body">You're already down <strong style="color:var(--mint)">18 lbs</strong> (203→185). That's exceptional progress — visible abs typically begin showing for men around <strong>12–15% body fat</strong>. At 5'9"/185 lb you're likely in the 18–22% range depending on muscle mass. The next 15–20 lbs of fat loss (via sustained deficit) is what reveals definition.</div>
+      <ul class="fb-list mint">
+        <li><strong>Easy long runs (8:30–9:30/mi)</strong> are your highest fat-oxidation sessions. 58% of calories come from fat at this intensity — more of these = more direct fat mobilization.</li>
+        <li><strong>Intervals + EPOC</strong> create 24–48hr elevated metabolism. Your 4:00 quarters are elite-level EPOC stimulus.</li>
+        <li><strong>Add 2–3 core sessions/week</strong>: hollow holds, dead bugs, cable crunches, ab wheel rollouts. Running reveals abs — these sessions build them.</li>
+        <li>Running at your current volume burns ~1,200–1,800 kcal/week. Pair with a <strong>300–400 kcal daily food deficit</strong> for the fastest sustainable path to definition.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Row 3: Workout alternatives - VO2 + calories + abs -->
+  <div class="feedback-grid three">
+    <div class="fb-card accent-purple">
+      <div class="fb-eyebrow">Section 3 — Raise VO₂ Max</div>
+      <div class="fb-title">Tempo Runs: The VO₂ Multiplier</div>
+      <div class="fb-body">You're missing the <strong>threshold zone</strong> (comfortably hard, ~7:00–7:30/mi). This is where the most powerful VO₂ adaptations happen — raising your lactate threshold and cardiac stroke volume.</div>
+      <ul class="fb-list purple">
+        <li><strong>Protocol:</strong> 1 mi warmup → 3–4 mi @ 7:00–7:20/mi → 1 mi cooldown. Once per week.</li>
+        <li>At 185 lb and 7:10 pace, this burns <strong>~580–620 kcal</strong> plus ~8% EPOC (+50 kcal) — comparable calorie density to your fast treadmill runs.</li>
+        <li>Expected VO₂ gain: <strong>+1 to +2 mL/kg/min per month</strong> of consistent tempo work. That's the fastest evidence-based path to your 58+ target.</li>
+        <li>Threshold work also increases fat oxidation at higher paces over time — your fat burn zone shifts upward, burning more fat even during fast runs.</li>
+      </ul>
+      <div style="margin-top:10px"><span class="fb-tag purple">Lactate Threshold</span><span class="fb-tag gold">VO₂ +2/mo</span><span class="fb-tag fire">~620 kcal</span></div>
+    </div>
+    <div class="fb-card accent-fire">
+      <div class="fb-eyebrow">Section 3 — Maximize EPOC + Calorie Burn</div>
+      <div class="fb-title">Pyramid Intervals: EPOC at Its Peak</div>
+      <div class="fb-body">Your current 6×¼mi intervals are excellent. The next level is <strong>pyramid intervals</strong>, which sustain elevated VO₂ longer and generate the highest EPOC response possible.</div>
+      <ul class="fb-list">
+        <li><strong>Protocol:</strong> 400m · 800m · 1200m · 800m · 400m with equal rest. All at 90–95% effort (~6:00–6:30/mi for 400s, slightly slower for longer reps.</li>
+        <li>Total ~3.4 miles of hard running. At your pace: <strong>~520 kcal in-session + ~75–80 kcal EPOC</strong> = ~600 effective kcal.</li>
+        <li>This format spends more time at VO₂ max intensity than equal-distance quarter repeats — the key driver of VO₂ improvement.</li>
+        <li><strong>Replace one ¼-mi interval session per week</strong> with pyramids. Keep one pure speed session for neuromuscular sharpness.</li>
+      </ul>
+      <div style="margin-top:10px"><span class="fb-tag fire">Peak EPOC</span><span class="fb-tag purple">VO₂ max time↑</span><span class="fb-tag gold">~600 kcal</span></div>
+    </div>
+    <div class="fb-card accent-mint">
+      <div class="fb-eyebrow">Section 3 — Abs & Body Composition</div>
+      <div class="fb-title">Fasted Incline + Strides Protocol</div>
+      <div class="fb-body">Two targeted add-ons that are low injury risk, high return for your specific goals of abs and overall toning.</div>
+      <ul class="fb-list mint">
+        <li><strong>Fasted incline walk (3–4x/week, 30–40 min, 12% grade):</strong> Before breakfast, your glycogen is depleted — body pulls almost entirely from fat stores. At 185 lb: <strong>~260–330 kcal/session, ~62% from fat</strong>. Zero recovery cost, can be done on rest days.</li>
+        <li><strong>Strides (2x/week, tacked onto easy runs):</strong> 6×20-sec accelerations to near-sprint pace at the end of an easy run. Stimulates fast-twitch fibers, improves running economy, adds ~+5% EPOC to the session. No extra time block required.</li>
+        <li><strong>Hill repeats (1x/week):</strong> 8×30-sec hard uphill, walk down. Builds posterior chain (glutes, hamstrings) — the toning work that makes legs and core look defined. Generates high EPOC for short total time.</li>
+        <li>Combined weekly addition: <strong>~900–1,100 kcal</strong> with minimal additional recovery demand.</li>
+      </ul>
+      <div style="margin-top:10px"><span class="fb-tag mint">Fat Oxidation</span><span class="fb-tag fire">Toning</span><span class="fb-tag blue">Low Impact</span><span class="fb-tag gold">+1,000 kcal/wk</span></div>
+    </div>
+  </div>
+</div>
+
+<main id="log"></main>
+
+<div class="footer-note">
+  <strong>Calorie model:</strong> MET-based, weight interpolated 203 lb (Jan) → 185 lb (Jun) at 5'9". Walks: MET 8.5 at 12% incline. <strong>EPOC included:</strong> intervals +15%, fast runs sub-7:30 +9%, moderate runs +5%, easy/walk +3% of session kcal added to total. Fat g = (fat% × kcal) ÷ 9 · Carb g = (carb% × kcal) ÷ 4. VO₂ max via Daniels VDOT. Longevity refs: Lee et al. (2017), Copenhagen City Heart Study. All figures are estimates.
+</div>
+
+<script>
+const WEIGHT_START_LB=203,WEIGHT_END_LB=185,TOTAL_WEEKS=23;
+function getWeightKg(wi){const pct=Math.min(wi/TOTAL_WEEKS,1);return(WEIGHT_START_LB-(WEIGHT_START_LB-WEIGHT_END_LB)*pct)*0.453592}
+
+function getMET(pace,isInt,isWalk){
+  if(isWalk)return 8.5;
+  if(isInt)return 14.0;
+  if(pace<=6.0)return 18.0;if(pace<=6.5)return 16.5;if(pace<=7.0)return 15.5;
+  if(pace<=7.5)return 14.5;if(pace<=8.0)return 13.5;if(pace<=8.5)return 12.5;
+  if(pace<=9.0)return 11.5;if(pace<=9.5)return 11.0;return 10.5;
+}
+function getFatPct(pace,isInt,isWalk){
+  if(isWalk)return 0.62;if(isInt)return 0.28;
+  if(pace<=6.5)return 0.30;if(pace<=7.5)return 0.40;if(pace<=8.5)return 0.50;return 0.58;
+}
+// EPOC multiplier: extra kcal generated post-exercise
+function getEPOCmult(pace,isInt,isWalk){
+  if(isWalk)return 0.03;
+  if(isInt)return 0.15;
+  if(pace<=7.5)return 0.09;
+  if(pace<=8.5)return 0.06;
+  return 0.04;
+}
+function calcWorkout(miles,pace,isInt,isWalk,isInc,weightKg){
+  const wKg=weightKg||(185*0.453592);
+  const durHr=(miles*pace)/60;
+  const met=getMET(pace,isInt,isWalk);
+  const kcalBase=met*wKg*durHr;
+  const epocMult=getEPOCmult(pace,isInt,isWalk);
+  const epocKcal=kcalBase*epocMult;
+  const kcal=kcalBase+epocKcal;
+  const fatPct=getFatPct(pace,isInt,isWalk);
+  const carbPct=1-fatPct;
+  const fatG=(fatPct*kcal)/9;
+  const carbG=(carbPct*kcal)/4;
+  const durMin=miles*pace;
+  return{kcal,kcalBase,epocKcal,fatG,carbG,fatPct,durMin,epocMult};
+}
+function estimateVO2(pace,isInt,isWalk){
+  if(isWalk)return null;
+  const spd=1609.34/pace;
+  const vo2=0.2*spd+3.5;
+  return Math.round(vo2/(isInt?0.90:0.72));
+}
+function healthNote(miles,pace,isInt,isWalk,kcal,epocKcal){
+  const notes=[];
+  if(isWalk){
+    notes.push({label:'Incline Walk (12%)',val:'Elevated HR · high fat oxidation',epoc:false});
+    notes.push({label:'Active Recovery',val:'Joint mobility + glute activation',epoc:false});
+    notes.push({label:'Fat Burn Zone',val:'~62% cals from fat',epoc:false});
+    notes.push({label:'EPOC +3%',val:`+${Math.round(epocKcal)} kcal afterburn`,epoc:true});
+    return notes;
+  }
+  if(isInt){
+    notes.push({label:'HIIT Effect',val:'24–48hr elevated metabolism',epoc:false});
+    notes.push({label:'Mitochondrial',val:'New mitochondria synthesis',epoc:false});
+    notes.push({label:'VO₂ Stimulus',val:'Time at VO₂ max → adaptation',epoc:false});
+    notes.push({label:'EPOC +15%',val:`+${Math.round(epocKcal)} kcal afterburn (24–48hr)`,epoc:true});
+    return notes;
+  }
+  if(pace<=7.5){
+    notes.push({label:'VO₂ Stimulus',val:'High aerobic adaptation',epoc:false});
+    notes.push({label:'Cardiac Output',val:'Stroke volume improvement',epoc:false});
+    notes.push({label:'EPOC +9%',val:`+${Math.round(epocKcal)} kcal afterburn`,epoc:true});
+  }else{
+    notes.push({label:'Fat Engine',val:'Aerobic fat oxidation ↑',epoc:false});
+    notes.push({label:'Zone 2',val:'Mitochondrial density ↑',epoc:false});
+    notes.push({label:'EPOC +5%',val:`+${Math.round(epocKcal)} kcal afterburn`,epoc:true});
+  }
+  if(miles>=6)notes.push({label:'Longevity',val:'+7 min life / min run (est.)',epoc:false});
+  if(kcal>500)notes.push({label:'Caloric Deficit',val:`~${Math.round(kcal)} kcal burned (incl. EPOC)`,epoc:false});
+  return notes;
+}
+function parsePace(s){if(!s)return 9;const m=s.match(/(\d+)'(\d+)/);return m?parseInt(m[1])+parseInt(m[2])/60:9}
+function resolvePace(w){return w.paceFromTime?parseFloat(w.totalTime)/w.miles:parsePace(w.pace)}
+
+// DATA
+const data=[
+  {month:'January',weeks:[
+    {week:'Week 1',workouts:[{raw:'3 mile — easy',type:'in',miles:3,pace:"9'30\"",isInterval:false,isWalk:false,isIncline:false}]},
+    {week:'Week 2',workouts:[
+      {raw:'1.5 mi incline walk',type:'in',miles:1.5,pace:"20'00\"",isInterval:false,isWalk:true,isIncline:true},
+      {raw:'5 mile — outside',type:'out',miles:5,pace:"9'00\"",isInterval:false,isWalk:false,isIncline:false}
+    ]},
+    {week:'Week 3',workouts:[{raw:'5 mile — treadmill',type:'in',miles:5,pace:"7'49\"",isInterval:false,isWalk:false,isIncline:false}]},
+    {week:'Week 4',workouts:[{raw:'5 mile — treadmill',type:'in',miles:5,pace:"7'38\"",isInterval:false,isWalk:false,isIncline:false}]}
+  ]},
+  {month:'February',weeks:[
+    {week:'Week 1',workouts:[
+      {raw:'1.5 mi incline walk',type:'in',miles:1.5,pace:"20'00\"",isInterval:false,isWalk:true,isIncline:true},
+      {raw:'1 mi run + 1.5 mi incline walk',type:'in',miles:2.5,pace:"9'30\"",isInterval:false,isWalk:false,isIncline:false,mixNote:"1 mi run @ ~8' + 1.5 mi incline walk"}
+    ]},
+    {week:'Week 2',workouts:[{raw:'5 mile — treadmill',type:'in',miles:5,pace:"8'12\"",isInterval:false,isWalk:false,isIncline:false}]},
+    {week:'Week 3',workouts:[{raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'}]},
+    {week:'Week 4',workouts:[{raw:'4 mile — outside',type:'out',miles:4,pace:"9'00\"",isInterval:false,isWalk:false,isIncline:false}]}
+  ]},
+  {month:'March',weeks:[
+    {week:'Week 1',workouts:[
+      {raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'},
+      {raw:'5 mile — treadmill',type:'in',miles:5,pace:"7'24\"",isInterval:false,isWalk:false,isIncline:false}
+    ]},
+    {week:'Week 2',workouts:[{raw:'7 mile — treadmill',type:'in',miles:7,paceFromTime:true,totalTime:'60',isInterval:false,isWalk:false,isIncline:false}]},
+    {week:'Week 3',workouts:[
+      {raw:'8 mile — treadmill',type:'in',miles:8,paceFromTime:true,totalTime:'71.5',isInterval:false,isWalk:false,isIncline:false},
+      {raw:'5 mile — treadmill',type:'in',miles:5,pace:"6'57\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:"6×¼mi intervals @ 4'00\"",type:'in',miles:1.5,pace:"4'00\"",isInterval:true,isWalk:false,isIncline:false,reps:"6×¼mi @ 4:00"}
+    ]},
+    {week:'Week 4',workouts:[
+      {raw:'6.21 mile — outside',type:'out',miles:6.21,paceFromTime:true,totalTime:'60',isInterval:false,isWalk:false,isIncline:false},
+      {raw:'5 mile — treadmill',type:'in',miles:5,pace:"7'06\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:"6×¼mi mixed intervals",type:'in',miles:1.5,pace:"5'20\"",isInterval:true,isWalk:false,isIncline:false,reps:"6×¼mi (2@4'+4@6')"}
+    ]}
+  ]},
+  {month:'April',weeks:[
+    {week:'Week 1',workouts:[
+      {raw:'7 mile — outside',type:'out',miles:7,pace:"9'22\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:'7 mile — outside',type:'out',miles:7,pace:"8'53\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:'1 mile — treadmill',type:'in',miles:1,pace:"6'58\"",isInterval:false,isWalk:false,isIncline:false}
+    ]},
+    {week:'Week 2',workouts:[{raw:'5 mile — treadmill',type:'in',miles:5,pace:"6'48\"",isInterval:false,isWalk:false,isIncline:false}]},
+    {week:'Week 3',workouts:[
+      {raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'},
+      {raw:'4 mile — treadmill',type:'in',miles:4,pace:"6'44\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:'7 mile — treadmill (mixed)',type:'in',miles:7,pace:"8'33\"",isInterval:false,isWalk:false,isIncline:false,mixNote:"6 mi @ 8'54\" + 1 mi @ 6'30\""}
+    ]},
+    {week:'Week 4',workouts:[
+      {raw:'5 mile — treadmill',type:'in',miles:5,pace:"7'06\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:'1 mile — treadmill',type:'in',miles:1,pace:"8'30\"",isInterval:false,isWalk:false,isIncline:false}
+    ]}
+  ]},
+  {month:'May',weeks:[
+    {week:'Week 1',workouts:[
+      {raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'},
+      {raw:'4 mile — treadmill',type:'in',miles:4,pace:"8'05\"",isInterval:false,isWalk:false,isIncline:false}
+    ]},
+    {week:'Week 2',workouts:[
+      {raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'},
+      {raw:'4.25 mile — treadmill',type:'in',miles:4.25,pace:"6'55\"",isInterval:false,isWalk:false,isIncline:false}
+    ]},
+    {week:'Week 3',workouts:[
+      {raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'},
+      {raw:'5 mile — outside',type:'out',miles:5,pace:"8'45\"",isInterval:false,isWalk:false,isIncline:false}
+    ]},
+    {week:'Week 4',workouts:[
+      {raw:'7 mile — outside',type:'out',miles:7,pace:"8'43\"",isInterval:false,isWalk:false,isIncline:false},
+      {raw:"6×¼mi intervals @ 6'00\"",type:'in',miles:1.5,pace:"6'00\"",isInterval:true,isWalk:false,isIncline:false,reps:'6×¼mi'}
+    ]}
+  ]},
+  {month:'June',weeks:[
+    {week:'Week 1',workouts:[{raw:'4 mile — treadmill',type:'in',miles:4,pace:"6'56\"",isInterval:false,isWalk:false,isIncline:false}]},
+    {week:'Week 2',workouts:[{raw:'5 mile — treadmill',type:'in',miles:5,pace:"7'05\"",isInterval:false,isWalk:false,isIncline:false}]}
+  ]}
+];
+
+// ── BUILD SERIES ──
+const weekSeries=[],monthVO2={};
+let _swi=0;
+data.forEach(mo=>{
+  mo.weeks.forEach(wk=>{
+    let wKcal=0,wCount=0,wVO2s=0,wVO2n=0;
+    const wKg=getWeightKg(_swi);
+    wk.workouts.forEach(w=>{
+      const pace=resolvePace(w);
+      const s=calcWorkout(w.miles,pace,w.isInterval,w.isWalk,w.isIncline,wKg);
+      wKcal+=s.kcal; wCount++;
+      const v2=estimateVO2(pace,w.isInterval,w.isWalk);
+      if(v2){wVO2s+=v2;wVO2n++;}
+    });
+    const avgV2=wVO2n>0?wVO2s/wVO2n:null;
+    weekSeries.push({label:mo.month.slice(0,3)+' W'+wk.week.replace(/Week /,''),month:mo.month,kcal:wKcal,count:wCount,avgVO2:avgV2});
+    if(!monthVO2[mo.month])monthVO2[mo.month]={sum:0,count:0};
+    if(avgV2){monthVO2[mo.month].sum+=avgV2;monthVO2[mo.month].count++;}
+    _swi++;
+  });
+});
+// monthly VO2 averages for chart
+const monthNames=data.map(m=>m.month);
+const monthVO2avgs=monthNames.map(mn=>{const mv=monthVO2[mn];return mv&&mv.count>0?mv.sum/mv.count:null});
+
+// ── CHART HELPERS ──
+function setupCanvas(id,h){
+  const c=document.getElementById(id);
+  if(!c)return null;
+  const dpr=window.devicePixelRatio||1;
+  const W=c.parentElement.clientWidth-32;
+  c.width=W*dpr; c.height=h*dpr;
+  c.style.width=W+'px'; c.style.height=h+'px';
+  const ctx=c.getContext('2d');
+  ctx.scale(dpr,dpr);
+  return{ctx,W,H:h};
+}
+function drawGrid(ctx,pad,cW,cH,steps,axisColor){
+  ctx.strokeStyle='rgba(42,48,64,0.7)';ctx.lineWidth=1;
+  for(let i=0;i<=steps;i++){
+    const y=pad.t+cH*(i/steps);
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();
+  }
+}
+
+// Chart 1: Weekly kcal line chart
+function drawKcalChart(){
+  const r=setupCanvas('chartKcal',140);if(!r)return;
+  const{ctx,W,H}=r;
+  const pad={t:16,r:10,b:30,l:44};
+  const cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+  const n=weekSeries.length;
+  const maxK=Math.max(...weekSeries.map(w=>w.kcal))*1.15;
+  drawGrid(ctx,pad,cW,cH,4,'#2A3040');
+  // y axis labels
+  ctx.fillStyle='#FF6B35';ctx.font='9px Inter,sans-serif';ctx.textAlign='right';
+  for(let i=0;i<=4;i++){
+    const v=maxK*(1-i/4);
+    ctx.fillText(Math.round(v/50)*50+'',pad.l-4,pad.t+cH*(i/4)+3);
+  }
+  // x labels
+  ctx.fillStyle='#7A8299';ctx.font='8px Inter,sans-serif';ctx.textAlign='center';
+  weekSeries.forEach((w,i)=>{
+    if(i%3===0||i===n-1)ctx.fillText(w.label,pad.l+(i/(n-1))*cW,H-pad.b+11);
+  });
+  function xp(i){return pad.l+(i/(n-1))*cW}
+  function yp(v){return pad.t+cH*(1-v/maxK)}
+  // gradient fill
+  const grad=ctx.createLinearGradient(0,pad.t,0,pad.t+cH);
+  grad.addColorStop(0,'rgba(255,107,53,0.3)');grad.addColorStop(1,'rgba(255,107,53,0)');
+  ctx.beginPath();
+  weekSeries.forEach((w,i)=>{const x=xp(i),y=yp(w.kcal);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.lineTo(xp(n-1),pad.t+cH);ctx.lineTo(xp(0),pad.t+cH);ctx.closePath();
+  ctx.fillStyle=grad;ctx.fill();
+  // line
+  ctx.beginPath();ctx.strokeStyle='#FF6B35';ctx.lineWidth=2;ctx.lineJoin='round';
+  weekSeries.forEach((w,i)=>{const x=xp(i),y=yp(w.kcal);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.stroke();
+  // dots
+  weekSeries.forEach((w,i)=>{
+    ctx.beginPath();ctx.arc(xp(i),yp(w.kcal),3,0,Math.PI*2);ctx.fillStyle='#FF6B35';ctx.fill();
+  });
+}
+
+// Chart 2: Workout count bar chart
+function drawCountChart(){
+  const r=setupCanvas('chartCount',140);if(!r)return;
+  const{ctx,W,H}=r;
+  const pad={t:16,r:10,b:30,l:28};
+  const cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+  const n=weekSeries.length;
+  const maxC=Math.max(...weekSeries.map(w=>w.count))+1;
+  drawGrid(ctx,pad,cW,cH,maxC-1,'#2A3040');
+  // y axis
+  ctx.fillStyle='#F5C842';ctx.font='9px Inter,sans-serif';ctx.textAlign='right';
+  for(let i=0;i<=maxC-1;i++){
+    const y=pad.t+cH*(1-i/(maxC-1));
+    ctx.fillText(i,pad.l-4,y+3);
+  }
+  // x labels
+  ctx.fillStyle='#7A8299';ctx.font='8px Inter,sans-serif';ctx.textAlign='center';
+  const barW=Math.max(cW/n*0.6,4);
+  weekSeries.forEach((w,i)=>{
+    const x=pad.l+(i/(n-1))*cW;
+    if(i%3===0||i===n-1)ctx.fillText(w.label,x,H-pad.b+11);
+    const barH=cH*(w.count/(maxC-1));
+    const barY=pad.t+cH-barH;
+    ctx.fillStyle='rgba(245,200,66,0.25)';
+    ctx.beginPath();
+    ctx.rect(x-barW/2,barY,barW,barH);ctx.fill();
+    ctx.strokeStyle='rgba(245,200,66,0.7)';ctx.lineWidth=1;ctx.stroke();
+    // count label on bar
+    if(w.count>0){
+      ctx.fillStyle='#F5C842';ctx.font='bold 9px Inter,sans-serif';ctx.textAlign='center';
+      ctx.fillText(w.count,x,barY-3);
+    }
+  });
+}
+
+// Chart 3: Monthly VO2 bar chart
+function drawVO2Chart(){
+  const r=setupCanvas('chartVO2',140);if(!r)return;
+  const{ctx,W,H}=r;
+  const pad={t:16,r:10,b:30,l:34};
+  const cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+  const n=monthNames.length;
+  const validVO2=monthVO2avgs.filter(v=>v!==null);
+  const minV=Math.min(...validVO2)*0.94;
+  const maxV=Math.max(...validVO2)*1.06;
+  drawGrid(ctx,pad,cW,cH,4,'#2A3040');
+  // y axis
+  ctx.fillStyle='#B07EFF';ctx.font='9px Inter,sans-serif';ctx.textAlign='right';
+  for(let i=0;i<=4;i++){
+    const v=minV+(maxV-minV)*(1-i/4);
+    ctx.fillText(Math.round(v),pad.l-4,pad.t+cH*(i/4)+3);
+  }
+  // reference line: top 10% (58)
+  const top10y=pad.t+cH*(1-(58-minV)/(maxV-minV));
+  if(top10y>=pad.t&&top10y<=pad.t+cH){
+    ctx.save();ctx.strokeStyle='rgba(245,200,66,0.7)';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(pad.l,top10y);ctx.lineTo(pad.l+cW,top10y);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='#F5C842';ctx.font='bold 8px Inter,sans-serif';ctx.textAlign='left';
+    ctx.fillText('Top 10% (58)',pad.l+2,top10y-3);
+    ctx.restore();
+  }
+  const barW=Math.max(cW/n*0.55,12);
+  monthVO2avgs.forEach((v,i)=>{
+    const x=pad.l+(i/(n-1))*cW;
+    if(v!==null){
+      const barH=cH*(v-minV)/(maxV-minV);
+      const barY=pad.t+cH-barH;
+      ctx.fillStyle='rgba(176,126,255,0.25)';
+      ctx.beginPath();ctx.rect(x-barW/2,barY,barW,barH);ctx.fill();
+      ctx.strokeStyle='rgba(176,126,255,0.8)';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.fillStyle='#B07EFF';ctx.font='bold 9px Inter,sans-serif';ctx.textAlign='center';
+      ctx.fillText(Math.round(v),x,barY-3);
+    }
+    ctx.fillStyle='#7A8299';ctx.font='8px Inter,sans-serif';ctx.textAlign='center';
+    ctx.fillText(monthNames[i].slice(0,3).toUpperCase(),x,H-pad.b+11);
+  });
+}
+
+function drawAllCharts(){drawKcalChart();drawCountChart();drawVO2Chart()}
+
+// ── RENDER MAIN LOG ──
+let totalKcal=0,totalMiles=0,totalFatG=0,totalCarbG=0,totalEPOC=0,workoutCount=0,weekCount=0;
+function fmtNum(n,d=0){return n.toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function fmtPace(p){const m=Math.floor(p),s=Math.round((p-m)*60);return`${m}'${String(s).padStart(2,'0')}"`}
+
+const log=document.getElementById('log');
+data.forEach(month=>{
+  let monthKcal=0,monthMiles=0;
+  const monthEl=document.createElement('div');monthEl.className='month open';
+  const monthBody=document.createElement('div');monthBody.className='month-body';
+  month.weeks.forEach(week=>{
+    const wKg=getWeightKg(weekCount);weekCount++;
+    const weekEl=document.createElement('div');weekEl.className='week';
+    weekEl.innerHTML=`<div class="week-label">${week.week}</div>`;
+    week.workouts.forEach(w=>{
+      const pace=resolvePace(w);
+      const stats=calcWorkout(w.miles,pace,w.isInterval,w.isWalk,w.isIncline,wKg);
+      monthKcal+=stats.kcal;monthMiles+=w.miles;
+      totalKcal+=stats.kcal;totalMiles+=w.miles;
+      totalFatG+=stats.fatG;totalCarbG+=stats.carbG;
+      totalEPOC+=stats.epocKcal;workoutCount++;
+      const fatPct=stats.fatPct,carbPct=1-fatPct;
+      const vo2=estimateVO2(pace,w.isInterval,w.isWalk);
+      const hnotes=healthNote(w.miles,pace,w.isInterval,w.isWalk,stats.kcal,stats.epocKcal);
+      const iconClass=w.isWalk?'walk':(w.type==='out'?'out':'in');
+      const icon=w.isWalk?'🚶':(w.type==='out'?'🌤':'🏃');
+      let badges='';
+      if(w.type==='out')badges+=`<span class="badge out">Outside</span>`;
+      else if(!w.isWalk)badges+=`<span class="badge in">Treadmill</span>`;
+      if(w.isInterval)badges+=`<span class="badge intervals">⚡ Intervals</span>`;
+      if(w.isWalk)badges+=`<span class="badge walk">Incline Walk</span>`;
+      const durStr=stats.durMin>=60?`${Math.floor(stats.durMin/60)}h ${Math.round(stats.durMin%60)}m`:`${Math.round(stats.durMin)}m`;
+      const wLb=Math.round(WEIGHT_START_LB-(WEIGHT_START_LB-WEIGHT_END_LB)*Math.min((weekCount-1)/TOTAL_WEEKS,1));
+      const el=document.createElement('div');el.className='workout';
+      el.innerHTML=`
+        <div class="workout-icon ${iconClass}">${icon}</div>
+        <div class="workout-main">
+          <div class="workout-title">${w.reps?`<span>${w.reps}</span>`:`<span>${w.miles} mi</span>`}${badges}</div>
+          <div class="chips">
+            <div class="chip"><span class="chip-val fire">${fmtNum(stats.kcal)}</span><span class="chip-lbl">kcal total</span></div>
+            <div class="chip"><span class="chip-val" style="color:var(--purple)">${fmtNum(stats.epocKcal)}</span><span class="chip-lbl">EPOC kcal</span></div>
+            <div class="chip"><span class="chip-val fire">${fmtNum(stats.fatG,1)}g</span><span class="chip-lbl">fat burned</span></div>
+            <div class="chip"><span class="chip-val mint">${fmtNum(stats.carbG,1)}g</span><span class="chip-lbl">carbs burned</span></div>
+            ${!w.isWalk?`<div class="chip"><span class="chip-val blue">${fmtPace(pace)}</span><span class="chip-lbl">/ mile</span></div>`:''}
+            <div class="chip"><span class="chip-val gold">${durStr}</span><span class="chip-lbl">duration</span></div>
+            ${vo2?`<div class="chip"><span class="chip-val purple">${vo2}</span><span class="chip-lbl">VO₂ est.</span></div>`:''}
+            <div class="chip"><span class="chip-val" style="color:var(--muted)">${wLb} lb</span><span class="chip-lbl">weight</span></div>
+          </div>
+          <div class="burn-bar-wrap">
+            <div class="burn-bar-labels">
+              <span>FAT ${Math.round(fatPct*100)}% · ${fmtNum(stats.fatG,1)}g</span>
+              <span>CARBS ${Math.round(carbPct*100)}% · ${fmtNum(stats.carbG,1)}g</span>
+            </div>
+            <div class="burn-bar">
+              <div class="burn-bar-fat" style="width:${fatPct*100}%"></div>
+              <div class="burn-bar-carb" style="width:${carbPct*100}%"></div>
+            </div>
+          </div>
+          <div class="health-chips">
+            ${hnotes.map(n=>`<div class="hchip${n.epoc?' epoc':''}"><strong>${n.label}:</strong> ${n.val}</div>`).join('')}
+            ${w.mixNote?`<div class="hchip"><strong>Note:</strong> ${w.mixNote}</div>`:''}
+          </div>
+        </div>
+        <div class="cal-col"><div class="cal-num">${fmtNum(stats.kcal)}</div><div class="cal-unit">kcal</div></div>`;
+      weekEl.appendChild(el);
+    });
+    monthBody.appendChild(weekEl);
+  });
+  monthEl.innerHTML=`<div class="month-header"><div class="month-title"><span class="month-name">${month.month}</span><span class="month-summary">${fmtNum(monthMiles,1)} mi · ${fmtNum(monthKcal)} kcal</span></div><span class="month-chevron">▾</span></div>`;
+  monthEl.appendChild(monthBody);log.appendChild(monthEl);
+  monthEl.querySelector('.month-header').addEventListener('click',()=>monthEl.classList.toggle('open'));
+});
+
+// GLOBAL STATS
+document.getElementById('globalStats').innerHTML=`
+  <div class="hstat"><span class="hstat-val">${fmtNum(totalMiles,1)}</span><span class="hstat-label">Total Miles</span></div>
+  <div class="hstat"><span class="hstat-val fire">${fmtNum(totalKcal)}</span><span class="hstat-label">Total kcal (incl. EPOC)</span></div>
+  <div class="hstat"><span class="hstat-val" style="color:var(--purple)">${fmtNum(totalEPOC)}</span><span class="hstat-label">EPOC Afterburn kcal</span></div>
+  <div class="hstat"><span class="hstat-val fire">${fmtNum(totalFatG,0)}g</span><span class="hstat-label">Fat Burned</span></div>
+  <div class="hstat"><span class="hstat-val mint">${fmtNum(totalCarbG,0)}g</span><span class="hstat-label">Carbs Burned</span></div>
+  <div class="hstat"><span class="hstat-val">${workoutCount}</span><span class="hstat-label">Workouts</span></div>
+  <div class="hstat"><span class="hstat-val blue">${fmtNum(totalFatG*9/3500,1)} lbs</span><span class="hstat-label">Fat Equiv.</span></div>`;
+document.getElementById('weeklyAvgStats').innerHTML=`
+  <div class="hstat"><span class="hstat-val">${fmtNum(totalMiles/weekCount,1)}</span><span class="hstat-label">Avg Miles/Week</span></div>
+  <div class="hstat"><span class="hstat-val fire">${fmtNum(totalKcal/weekCount)}</span><span class="hstat-label">Avg kcal/Week</span></div>
+  <div class="hstat"><span class="hstat-val" style="color:var(--purple)">${fmtNum(totalEPOC/weekCount)}</span><span class="hstat-label">Avg EPOC/Week</span></div>
+  <div class="hstat"><span class="hstat-val fire">${fmtNum(totalFatG/weekCount,1)}g</span><span class="hstat-label">Avg Fat/Week</span></div>
+  <div class="hstat"><span class="hstat-val mint">${fmtNum(totalCarbG/weekCount,1)}g</span><span class="hstat-label">Avg Carbs/Week</span></div>
+  <div class="hstat"><span class="hstat-val gold">${fmtNum(workoutCount/weekCount,1)}</span><span class="hstat-label">Avg Sessions/Week</span></div>`;
+
+requestAnimationFrame(drawAllCharts);
+window.addEventListener('resize',drawAllCharts);
+</script>
+
+<!-- GITHUB DEPLOY GUIDE -->
+<div style="margin:0;padding:28px 32px 40px;border-top:2px solid var(--border);background:var(--surface)">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px">Deploy to GitHub Pages</div>
+  <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Host this file as a public URL in ~2 minutes — no server needed</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--fire);border-radius:8px;padding:16px">
+      <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fire);margin-bottom:8px">Option A — GitHub Web UI (easiest)</div>
+      <ol style="padding-left:16px;font-size:13px;color:#C0C8D8;line-height:2">
+        <li>Go to <strong style="color:var(--text)">github.com</strong> → New repository</li>
+        <li>Name it <code style="background:rgba(255,107,53,.15);color:var(--fire);padding:1px 6px;border-radius:3px">run-log</code> → set <strong style="color:var(--text)">Public</strong></li>
+        <li>Click <strong style="color:var(--text)">Add file → Upload files</strong> → drag <code style="background:rgba(255,107,53,.15);color:var(--fire);padding:1px 6px;border-radius:3px">run_tracker.html</code></li>
+        <li><strong style="color:var(--text)">Rename to</strong> <code style="background:rgba(255,107,53,.15);color:var(--fire);padding:1px 6px;border-radius:3px">index.html</code> before uploading</li>
+        <li>Settings → Pages → Branch: <strong style="color:var(--text)">main / root</strong> → Save</li>
+        <li>URL: <code style="background:rgba(74,158,255,.12);color:var(--blue);padding:1px 6px;border-radius:3px">https://yourusername.github.io/run-log</code></li>
+      </ol>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:8px;padding:16px">
+      <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Option B — Git CLI (for ongoing updates)</div>
+      <pre style="background:#0D0F14;border:1px solid var(--border);border-radius:6px;padding:12px;font-size:12px;color:#C0C8D8;line-height:1.8;overflow-x:auto"><span style="color:var(--muted)"># First time</span>
+git init
+git remote add origin https://github.com/YOU/run-log.git
+cp run_tracker.html index.html
+git add index.html && git commit -m "init"
+git push -u origin main
+
+<span style="color:var(--muted)"># Each update</span>
+cp run_tracker.html index.html
+git add index.html && git commit -m "update log"
+git push</pre>
+    </div>
+  </div>
+</div>
+</body>
+</html>
