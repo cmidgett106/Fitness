@@ -138,7 +138,7 @@
 <body>
 
 <header>
-  <div class="header-eyebrow">2025 Training Log</div>
+  <div class="header-eyebrow">2026 Training Log</div>
   <h1>RUN<br><span>LOG</span></h1>
   <div class="stats-section">
     <div class="stats-row-label"><span>▸</span> Year to Date</div>
@@ -782,37 +782,5 @@ requestAnimationFrame(drawAllCharts);
 window.addEventListener('resize',drawAllCharts);
 </script>
 
-<!-- GITHUB DEPLOY GUIDE -->
-<div style="margin:0;padding:28px 32px 40px;border-top:2px solid var(--border);background:var(--surface)">
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px">Deploy to GitHub Pages</div>
-  <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Host this file as a public URL in ~2 minutes — no server needed</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-    <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--fire);border-radius:8px;padding:16px">
-      <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fire);margin-bottom:8px">Option A — GitHub Web UI (easiest)</div>
-      <ol style="padding-left:16px;font-size:13px;color:#C0C8D8;line-height:2">
-        <li>Go to <strong style="color:var(--text)">github.com</strong> → New repository</li>
-        <li>Name it <code style="background:rgba(255,107,53,.15);color:var(--fire);padding:1px 6px;border-radius:3px">run-log</code> → set <strong style="color:var(--text)">Public</strong></li>
-        <li>Click <strong style="color:var(--text)">Add file → Upload files</strong> → drag <code style="background:rgba(255,107,53,.15);color:var(--fire);padding:1px 6px;border-radius:3px">run_tracker.html</code></li>
-        <li><strong style="color:var(--text)">Rename to</strong> <code style="background:rgba(255,107,53,.15);color:var(--fire);padding:1px 6px;border-radius:3px">index.html</code> before uploading</li>
-        <li>Settings → Pages → Branch: <strong style="color:var(--text)">main / root</strong> → Save</li>
-        <li>URL: <code style="background:rgba(74,158,255,.12);color:var(--blue);padding:1px 6px;border-radius:3px">https://yourusername.github.io/run-log</code></li>
-      </ol>
-    </div>
-    <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:8px;padding:16px">
-      <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Option B — Git CLI (for ongoing updates)</div>
-      <pre style="background:#0D0F14;border:1px solid var(--border);border-radius:6px;padding:12px;font-size:12px;color:#C0C8D8;line-height:1.8;overflow-x:auto"><span style="color:var(--muted)"># First time</span>
-git init
-git remote add origin https://github.com/YOU/run-log.git
-cp run_tracker.html index.html
-git add index.html && git commit -m "init"
-git push -u origin main
-
-<span style="color:var(--muted)"># Each update</span>
-cp run_tracker.html index.html
-git add index.html && git commit -m "update log"
-git push</pre>
-    </div>
-  </div>
-</div>
 </body>
 </html>
